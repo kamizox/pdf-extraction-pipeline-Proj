@@ -1,0 +1,49 @@
+name: CI
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+
+jobs:
+  backend:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: backend
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+      - name: Generate datasets if missing
+        run: python generate_datasets.py
+      - name: Smoke test ML modules
+        run: |
+          python -c "from ml import timeseries, xgboost_model, nlp_sentiment, cnn_damage, clustering
+          timeseries.run_timeseries_analysis()
+          xgboost_model.run_xgboost_analysis()
+          nlp_sentiment.run_nlp_analysis()
+          cnn_damage.run_cnn_analysis()
+          clustering.run_clustering_analysis()
+          print('OK')"
+
+  frontend:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: frontend
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+      - name: Install and build
+        run: |
+          npm install
+          npm run build
