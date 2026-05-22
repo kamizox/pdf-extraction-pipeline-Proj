@@ -16,9 +16,9 @@ function ConfusionTable({ matrix, labels }) {
     <table className="w-full border-collapse text-sm">
       <thead>
         <tr>
-          <th className="border border-green-200 bg-flood-card p-2">Actual \ Pred</th>
+          <th className="border border-green-200 bg-flood-card p-2">Actual \ Predicted</th>
           {labels.map((l) => (
-            <th key={l} className="border border-green-200 bg-flood-card p-2">
+            <th key={l} className="border border-green-200 bg-flood-card p-2 text-xs">
               {l}
             </th>
           ))}
@@ -27,14 +27,16 @@ function ConfusionTable({ matrix, labels }) {
       <tbody>
         {matrix.map((row, i) => (
           <tr key={i}>
-            <th className="border border-green-200 bg-flood-card p-2">{labels[i]}</th>
+            <th className="border border-green-200 bg-flood-card p-2 text-xs">{labels[i]}</th>
             {row.map((val, j) => {
               const intensity = Math.round((val / maxVal) * 180);
               return (
                 <td
                   key={j}
                   className="border border-green-200 p-2 text-center font-medium"
-                  style={{ backgroundColor: `rgba(22, 163, 74, ${0.15 + intensity / 255})` }}
+                  style={{
+                    backgroundColor: `rgba(22, 163, 74, ${0.15 + intensity / 255})`,
+                  }}
                 >
                   {val}
                 </td>
@@ -51,7 +53,7 @@ export default function CNNDamageChart({ data }) {
   if (!data?.accuracy && data?.accuracy !== 0) {
     return (
       <div className="rounded-xl border border-green-200 bg-flood-card p-8 text-center text-green-800">
-        Run Neural Network analysis to view results.
+        Run Neural Network (MLP) analysis to view results.
       </div>
     );
   }
@@ -64,10 +66,13 @@ export default function CNNDamageChart({ data }) {
   return (
     <div className="space-y-6">
       <h3 className="text-lg font-bold text-flood-text">
-        Neural Network — Damage Level Prediction (Dataset 4)
+        Neural Network (MLP) — Damage Level Prediction
       </h3>
+      <p className="text-sm text-green-700">
+        Multi-dimensional infrastructure damage tiers: Low, Medium, Extreme Destruction.
+      </p>
 
-      <div className="grid grid-cols-2 gap-4 max-w-md">
+      <div className="grid max-w-md grid-cols-2 gap-4">
         <div className="rounded-xl border border-green-200 bg-flood-card p-4">
           <p className="text-xs uppercase text-green-700">Accuracy</p>
           <p className="text-2xl font-bold text-flood-text">
@@ -97,7 +102,12 @@ export default function CNNDamageChart({ data }) {
           <BarChart data={proxyData} layout="vertical" margin={{ left: 140 }}>
             <CartesianGrid strokeDasharray="3 3" stroke="#bbf7d0" />
             <XAxis type="number" tick={{ fill: '#14532d' }} />
-            <YAxis type="category" dataKey="name" width={130} tick={{ fill: '#14532d', fontSize: 10 }} />
+            <YAxis
+              type="category"
+              dataKey="name"
+              width={130}
+              tick={{ fill: '#14532d', fontSize: 10 }}
+            />
             <Tooltip />
             <Bar dataKey="value" fill="#16a34a" radius={[0, 4, 4, 0]} />
           </BarChart>

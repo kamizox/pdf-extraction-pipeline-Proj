@@ -10,7 +10,14 @@ import {
   ZAxis,
 } from 'recharts';
 
-const CLUSTER_COLORS = ['#16a34a', '#4ade80', '#f97316', '#ef4444'];
+const CLUSTER_COLORS = ['#16a34a', '#f97316', '#ef4444'];
+const CLUSTER_IDS = [0, 1, 2];
+
+const defaultLabels = {
+  0: 'Low Risk Zone',
+  1: 'Medium Risk Zone',
+  2: 'High Risk Zone',
+};
 
 export default function ClusteringChart({ data }) {
   if (!data?.data_with_clusters?.length) {
@@ -21,8 +28,11 @@ export default function ClusteringChart({ data }) {
     );
   }
 
-  const groups = [0, 1, 2, 3].map((cluster) => ({
+  const labelMap = data.cluster_labels || defaultLabels;
+
+  const groups = CLUSTER_IDS.map((cluster) => ({
     cluster,
+    name: labelMap[cluster] ?? defaultLabels[cluster],
     points: data.data_with_clusters
       .filter((d) => d.cluster === cluster)
       .map((d) => ({
@@ -30,45 +40,75 @@ export default function ClusteringChart({ data }) {
         y: d.Flooded_Area_sqkm,
         province: d.Province,
         district: d.District,
+        zone: d.cluster_label || labelMap[cluster],
       })),
   }));
 
   return (
     <div className="relative rounded-xl border border-green-200 bg-white p-4 shadow-sm">
-      <h3 className="mb-4 text-lg font-bold text-flood-text">
-        K-Means Risk Zone Clustering (Dataset 5)
+      <h3 className="mb-2 text-lg font-bold text-flood-text">
+        Unsupervised Regional Risk Clustering (Dataset 5)
       </h3>
+      <p className="mb-4 text-sm text-green-700">
+        K-Means (k=3): district records grouped into automated low, medium, and high risk zones.
+      </p>
       {data.silhouette_score != null && (
         <span className="absolute right-6 top-6 rounded-full bg-flood-card px-3 py-1 text-sm font-semibold text-flood-text">
           Silhouette: {data.silhouette_score}
         </span>
       )}
-      <ResponsiveContainer width="100%" height={400}>
-        <ScatterChart margin={{ top: 20, right: 20, bottom: 20, left: 20 }}>
+      <ResponsiveContainer width="100%" height={440}>
+        <ScatterChart
+          margin={{ top: 16, right: 24, left: 16, bottom: 72 }}
+        >
           <CartesianGrid strokeDasharray="3 3" stroke="#bbf7d0" />
           <XAxis
             type="number"
             dataKey="x"
             name="Rainfall"
             unit=" mm"
-            tick={{ fill: '#14532d' }}
-            label={{ value: 'Rainfall (mm)', position: 'bottom', fill: '#14532d' }}
+            tick={{ fill: '#14532d', fontSize: 11 }}
+            label={{
+              value: 'Rainfall (mm)',
+              position: 'bottom',
+              offset: 24,
+              fill: '#14532d',
+            }}
           />
           <YAxis
             type="number"
             dataKey="y"
             name="Flooded Area"
             unit=" sqkm"
-            tick={{ fill: '#14532d' }}
-            label={{ value: 'Flooded Area (sqkm)', angle: -90, position: 'insideLeft', fill: '#14532d' }}
+            tick={{ fill: '#14532d', fontSize: 11 }}
+            label={{
+              value: 'Flooded Area (sqkm)',
+              angle: -90,
+              position: 'insideLeft',
+              fill: '#14532d',
+            }}
           />
-          <ZAxis range={[30, 30]} />
-          <Tooltip cursor={{ strokeDasharray: '3 3' }} />
-          <Legend />
+          <ZAxis range={[28, 28]} />
+          <Tooltip
+            cursor={{ strokeDasharray: '3 3' }}
+            formatter={(value, name) => [value, name]}
+            labelFormatter={(_, payload) => {
+              const p = payload?.[0]?.payload;
+              return p
+                ? `${p.district}, ${p.province} — ${p.zone}`
+                : '';
+            }}
+          />
+          <Legend
+            verticalAlign="bottom"
+            align="center"
+            layout="horizontal"
+            wrapperStyle={{ paddingTop: 12 }}
+          />
           {groups.map((g) => (
             <Scatter
               key={g.cluster}
-              name={`Cluster ${g.cluster}`}
+              name={g.name}
               data={g.points}
               fill={CLUSTER_COLORS[g.cluster]}
             />

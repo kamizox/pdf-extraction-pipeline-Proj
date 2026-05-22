@@ -9,7 +9,7 @@ from sklearn.neural_network import MLPClassifier
 from ml.preprocessing import clean_dataframe
 
 DATASET_PATH = Path(__file__).resolve().parent.parent / 'datasets' / 'Dataset4_CNN_DamagePrediction.csv'
-CLASS_LABELS = ['Low Damage', 'Medium Damage', 'High Damage']
+CLASS_LABELS = ['Low Damage', 'Medium Damage', 'Extreme Damage']
 
 
 def run_cnn_analysis():

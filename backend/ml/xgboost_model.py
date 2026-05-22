@@ -14,7 +14,8 @@ FEATURES = [
     'Persons_Affected', 'Total_Houses_Damaged', 'Roads_Damaged_km',
     'Est_Damages_USD_Mn', 'Max_Temp_C', 'Mean_Temp_C',
 ]
-CLASS_LABELS = ['Low', 'Medium', 'High']
+CLASS_LABELS = ['No Deaths', '1–50 Deaths', 'Critical Deaths']
+CORE_DRIVERS = {'Persons_Affected', 'Rainfall_Actual_mm'}
 
 
 def run_xgboost_analysis():
@@ -41,7 +42,11 @@ def run_xgboost_analysis():
 
     importances = model.feature_importances_
     feature_importance = [
-        {'feature': feat, 'importance': round(float(imp), 4)}
+        {
+            'feature': feat,
+            'importance': round(float(imp), 4),
+            'is_core_driver': feat in CORE_DRIVERS,
+        }
         for feat, imp in sorted(zip(FEATURES, importances), key=lambda x: -x[1])
     ]
 
