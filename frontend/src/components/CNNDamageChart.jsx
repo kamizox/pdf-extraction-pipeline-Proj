@@ -8,6 +8,42 @@ import {
   ResponsiveContainer,
 } from 'recharts';
 
+function pct(value) {
+  if (value == null) return '—';
+  return value > 1 ? value.toFixed(1) : (value * 100).toFixed(1);
+}
+
+function heatColor(value) {
+  const v = Math.max(0, Math.min(1, value));
+  if (v < 0.25) return `rgb(134, 239, 172)`;
+  if (v < 0.5) return `rgb(74, 222, 128)`;
+  if (v < 0.75) return `rgb(249, 115, 22)`;
+  return `rgb(239, 68, 68)`;
+}
+
+function HeatmapGrid({ title, grid }) {
+  if (!grid?.length) return null;
+  return (
+    <div className="flex flex-1 flex-col rounded-xl border border-green-200 bg-white p-3">
+      <p className="mb-2 text-center text-xs font-bold text-flood-text">{title}</p>
+      <div className="mx-auto grid grid-cols-3 gap-1">
+        {grid.map((row, ri) =>
+          row.map((cell, ci) => (
+            <div
+              key={`${ri}-${ci}`}
+              className="flex h-14 w-14 items-center justify-center rounded border border-green-100 text-[10px] font-semibold text-[#14532d] shadow-sm"
+              style={{ backgroundColor: heatColor(cell) }}
+              title={`${cell}`}
+            >
+              {typeof cell === 'number' ? cell.toFixed(2) : cell}
+            </div>
+          ))
+        )}
+      </div>
+    </div>
+  );
+}
+
 function ConfusionTable({ matrix, labels }) {
   if (!matrix?.length) return null;
   const maxVal = Math.max(...matrix.flat(), 1);
@@ -50,56 +86,71 @@ function ConfusionTable({ matrix, labels }) {
 }
 
 export default function CNNDamageChart({ data }) {
-  if (!data?.accuracy && data?.accuracy !== 0) {
+  if (!data || data.accuracy == null) {
     return (
       <div className="rounded-xl border border-green-200 bg-flood-card p-8 text-center text-green-800">
-        Run Neural Network (MLP) analysis to view results.
+        Run CNN analysis to view results.
       </div>
     );
   }
 
-  const proxyData = (data.feature_importance_proxy || []).map((f) => ({
-    name: f.feature.replace('_normalized', ''),
-    value: f.mean_abs_value,
+  const labels = data.labels || data.class_labels || [];
+  const fiData = (data.feature_importance || data.feature_importance_proxy || []).map((f) => ({
+    name: (f.feature || '').replace('_normalized', ''),
+    value: f.importance ?? f.mean_abs_value ?? 0,
   }));
 
   return (
     <div className="space-y-6">
-      <h3 className="text-lg font-bold text-flood-text">
-        Neural Network (MLP) — Damage Level Prediction
-      </h3>
-      <p className="text-sm text-green-700">
-        Multi-dimensional infrastructure damage tiers: Low, Medium, Extreme Destruction.
-      </p>
+      <div>
+        <h3 className="text-lg font-bold text-flood-text">
+          CNN Classification — Spatial Infrastructure Damage Tiers
+        </h3>
+        <p className="mt-1 text-sm text-green-700">
+          Convolutional Neural Network trained on 2D Spatiotemporal Heatmap Grids of Flood
+          Features
+        </p>
+      </div>
 
       <div className="grid max-w-md grid-cols-2 gap-4">
         <div className="rounded-xl border border-green-200 bg-flood-card p-4">
           <p className="text-xs uppercase text-green-700">Accuracy</p>
-          <p className="text-2xl font-bold text-flood-text">
-            {(data.accuracy * 100).toFixed(1)}%
-          </p>
+          <p className="text-2xl font-bold text-flood-text">{pct(data.accuracy)}%</p>
         </div>
         <div className="rounded-xl border border-green-200 bg-flood-card p-4">
           <p className="text-xs uppercase text-green-700">F1 Score</p>
-          <p className="text-2xl font-bold text-flood-text">
-            {(data.f1_score * 100).toFixed(1)}%
-          </p>
+          <p className="text-2xl font-bold text-flood-text">{pct(data.f1_score)}%</p>
         </div>
       </div>
 
-      {data.training_note && (
-        <p className="text-sm text-green-700">{data.training_note}</p>
+      {data.model_summary && (
+        <p className="text-sm font-medium text-[#15803d]">{data.model_summary}</p>
       )}
 
-      <div className="rounded-xl border border-green-200 bg-white p-4">
-        <h4 className="mb-3 font-semibold text-flood-text">Confusion Matrix</h4>
-        <ConfusionTable matrix={data.confusion_matrix} labels={data.class_labels} />
+      <div className="rounded-xl border border-green-200 bg-[#f0fdf4] p-4">
+        <h4 className="mb-4 text-center text-sm font-bold tracking-wide text-flood-text">
+          INPUT RASTER MATRIX GRIDS
+        </h4>
+        <div className="flex flex-col gap-4 lg:flex-row lg:justify-center">
+          {(data.sample_grids || []).map((sample) => (
+            <HeatmapGrid key={sample.title} title={sample.title} grid={sample.grid} />
+          ))}
+        </div>
+        <p className="mt-3 text-center text-xs text-gray-500">
+          Each 4×3 cell matrix is one flood record reshaped from 12 normalized features (0 = low,
+          1 = high intensity).
+        </p>
       </div>
 
       <div className="rounded-xl border border-green-200 bg-white p-4">
-        <h4 className="mb-3 font-semibold text-flood-text">Feature Proxy Importance</h4>
+        <h4 className="mb-3 font-semibold text-flood-text">Confusion Matrix</h4>
+        <ConfusionTable matrix={data.confusion_matrix} labels={labels} />
+      </div>
+
+      <div className="rounded-xl border border-green-200 bg-white p-4">
+        <h4 className="mb-3 font-semibold text-flood-text">Feature Importance</h4>
         <ResponsiveContainer width="100%" height={300}>
-          <BarChart data={proxyData} layout="vertical" margin={{ left: 140 }}>
+          <BarChart data={fiData} layout="vertical" margin={{ left: 140 }}>
             <CartesianGrid strokeDasharray="3 3" stroke="#bbf7d0" />
             <XAxis type="number" tick={{ fill: '#14532d' }} />
             <YAxis
