@@ -7,3 +7,4 @@ xgboost
 statsmodels
 openpyxl
 python-multipart
+torch

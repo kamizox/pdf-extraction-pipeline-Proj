@@ -57,9 +57,9 @@ export default function ClusteringChart({ data }) {
           Silhouette: {data.silhouette_score}
         </span>
       )}
-      <ResponsiveContainer width="100%" height={440}>
+      <ResponsiveContainer width="100%" height={480}>
         <ScatterChart
-          margin={{ top: 16, right: 24, left: 16, bottom: 72 }}
+          margin={{ top: 16, right: 24, left: 20, bottom: 88 }}
         >
           <CartesianGrid strokeDasharray="3 3" stroke="#bbf7d0" />
           <XAxis
@@ -70,8 +70,8 @@ export default function ClusteringChart({ data }) {
             tick={{ fill: '#14532d', fontSize: 11 }}
             label={{
               value: 'Rainfall (mm)',
-              position: 'bottom',
-              offset: 24,
+              position: 'insideBottom',
+              offset: -4,
               fill: '#14532d',
             }}
           />
@@ -103,7 +103,8 @@ export default function ClusteringChart({ data }) {
             verticalAlign="bottom"
             align="center"
             layout="horizontal"
-            wrapperStyle={{ paddingTop: 12 }}
+            iconType="circle"
+            wrapperStyle={{ paddingTop: 20, bottom: 0 }}
           />
           {groups.map((g) => (
             <Scatter

@@ -18,7 +18,9 @@ jobs:
         with:
           python-version: '3.11'
       - name: Install dependencies
-        run: pip install -r requirements.txt
+        run: |
+          pip install -r requirements.txt
+          pip install torch --index-url https://download.pytorch.org/whl/cpu
       - name: Generate datasets if missing
         run: python generate_datasets.py
       - name: Smoke test ML modules

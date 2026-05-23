@@ -169,7 +169,7 @@ export default function NLPSentimentChart({ data }) {
           </BarChart>
         </ResponsiveContainer>
       </div>
-
+{/* 
       <div className="rounded-xl border border-green-200 bg-white p-4">
         <h4 className="mb-3 font-semibold text-flood-text">Top 10 Words</h4>
         <ResponsiveContainer width="100%" height={280}>
@@ -181,7 +181,7 @@ export default function NLPSentimentChart({ data }) {
             <Bar dataKey="count" fill="#16a34a" radius={[0, 4, 4, 0]} />
           </BarChart>
         </ResponsiveContainer>
-      </div>
+      </div> */}
     </div>
   );
 }
