@@ -9,7 +9,9 @@ import NLPSentimentChart from '../components/NLPSentimentChart';
 import CNNDamageChart from '../components/CNNDamageChart';
 import PlotlyViewer from '../components/PlotlyViewer';
 
-const API = 'http://localhost:8000';
+// Use environment variable for API URL, fallback to localhost for development
+const API = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+
 const TABS = [
   { id: 'timeseries', label: 'ARIMA' },
   { id: 'xgboost', label: 'XGBoost' },

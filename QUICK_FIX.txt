@@ -1,0 +1,97 @@
+================================================================================
+  PAKISTAN FLOOD ML DASHBOARD - QUICK FIX FOR "NOT FOUND" ERROR
+================================================================================
+
+PROBLEM:
+--------
+✗ /api/dataset/info returns 404 "Not Found"
+✗ 4 different processes running on port 8000 (PIDs: 21024, 22100, 10460, 18760)
+✗ Requests hitting wrong/old backend instance
+
+SOLUTION:
+---------
+Run this ONE command in project root:
+
+    fix_backend.bat
+
+That's it! The script will:
+  1. Kill all 4 processes on port 8000
+  2. Verify port is free
+  3. Start the correct backend
+  4. Backend will be ready at http://localhost:8000
+
+================================================================================
+
+MANUAL ALTERNATIVE:
+-------------------
+
+1. Kill all processes:
+   taskkill /F /PID 21024
+   taskkill /F /PID 22100
+   taskkill /F /PID 10460
+   taskkill /F /PID 18760
+
+2. Start backend:
+   cd backend
+   venv\Scripts\activate
+   uvicorn main:app --reload --host 0.0.0.0 --port 8000
+
+3. Test:
+   curl http://localhost:8000/api/dataset/info
+
+================================================================================
+
+FULL PROJECT STARTUP:
+---------------------
+
+To start both backend AND frontend:
+
+    start_project.bat
+
+This opens two windows:
+  - Backend Server (port 8000)
+  - Frontend Dev Server (port 5173)
+
+Then opens http://localhost:5173 in your browser.
+
+================================================================================
+
+VERIFICATION:
+-------------
+
+✓ Only ONE process on port 8000:
+  netstat -ano | findstr :8000
+
+✓ API docs load:
+  http://localhost:8000/docs
+
+✓ Dataset info works:
+  http://localhost:8000/api/dataset/info
+
+✓ Dashboard loads:
+  http://localhost:5173
+
+✓ "Run Analysis" button works without errors
+
+================================================================================
+
+DIAGNOSTIC TOOLS:
+-----------------
+
+diagnose_port.bat    - See what's running on port 8000
+verify_routes.bat    - Test if routes are registered
+fix_backend.bat      - Clean up and restart backend
+start_project.bat    - Start everything at once
+check_status.bat     - Check system status
+
+================================================================================
+
+NEED MORE HELP?
+---------------
+
+See detailed instructions in:
+  - FIX_INSTRUCTIONS.md (step-by-step guide)
+  - TROUBLESHOOTING.md (common issues)
+  - README.md (project overview)
+
+================================================================================

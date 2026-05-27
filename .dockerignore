@@ -1,0 +1,49 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+
+# Virtual environments
+venv/
+env/
+.venv/
+backend/venv/
+backend/env/
+
+# Frontend (not needed in backend container)
+frontend/
+node_modules/
+
+# Git
+.git/
+.gitignore
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Documentation
+*.md
+!backend/*.md
+
+# Deployment configs
+.github/
+.vercel/
+render.yaml
+vercel.json
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Temporary files
+*.log
+*.tmp
+backend/datasets/_temp_upload*
+
+# Keep only backend folder contents
+!backend/

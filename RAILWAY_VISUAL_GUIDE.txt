@@ -1,0 +1,581 @@
+================================================================================
+  RAILWAY.APP DEPLOYMENT - VISUAL GUIDE (NO CREDIT CARD!)
+================================================================================
+
+                         DEPLOYMENT ARCHITECTURE
+                         
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                                                                             │
+│                            👤 USER'S BROWSER                                │
+│                                                                             │
+└──────────────────────────────┬──────────────────────────────────────────────┘
+                               │
+                               │ HTTPS
+                               │
+                ┌──────────────┴──────────────┐
+                │                             │
+                ▼                             ▼
+┌───────────────────────────┐   ┌───────────────────────────┐
+│                           │   │                           │
+│   🎨 FRONTEND (Vercel)    │   │  🚂 BACKEND (Railway)     │
+│                           │   │                           │
+│  • React + Vite           │   │  • FastAPI + Python       │
+│  • Tailwind CSS           │   │  • 5 ML Models            │
+│  • Recharts               │   │  • PyTorch, XGBoost       │
+│  • Global CDN             │   │  • Pandas, NumPy          │
+│  • Auto HTTPS             │   │  • Auto HTTPS             │
+│                           │   │                           │
+│  💰 FREE                  │   │  💰 FREE ($5 credits)     │
+│  💳 No card needed        │   │  💳 No card needed        │
+│  ⚡ Instant response       │   │  ⚡ No cold starts        │
+│                           │   │                           │
+└───────────────┬───────────┘   └───────────┬───────────────┘
+                │                           │
+                │    API Calls via HTTPS    │
+                └───────────►◄──────────────┘
+                     (CORS Enabled)
+
+================================================================================
+
+                    STEP-BY-STEP DEPLOYMENT GUIDE
+
+STEP 1: DEPLOY BACKEND TO RAILWAY.APP
+──────────────────────────────────────
+
+1. Go to: https://railway.app
+   
+   ┌─────────────────────────────────────────┐
+   │  🚂 Railway                             │
+   │                                         │
+   │  Deploy from GitHub, zero config       │
+   │                                         │
+   │  [Login with GitHub] ◄─── Click        │
+   │                                         │
+   │  💳 No credit card required!            │
+   └─────────────────────────────────────────┘
+
+2. Authorize Railway
+   
+   ┌─────────────────────────────────────────┐
+   │  GitHub Authorization                   │
+   │                                         │
+   │  Railway wants to:                      │
+   │  ✓ Read your repositories               │
+   │  ✓ Deploy from GitHub                   │
+   │                                         │
+   │  [Authorize Railway] ◄─── Click         │
+   └─────────────────────────────────────────┘
+
+3. Create New Project
+   
+   ┌─────────────────────────────────────────┐
+   │  Railway Dashboard                      │
+   │                                         │
+   │  [+ New Project] ◄─── Click             │
+   │                                         │
+   │  Options:                               │
+   │  • Deploy from GitHub repo ◄─── Select │
+   │  • Deploy from template                 │
+   │  • Empty project                        │
+   └─────────────────────────────────────────┘
+
+4. Select Repository
+   
+   ┌─────────────────────────────────────────┐
+   │  Select Repository                      │
+   │                                         │
+   │  Search: pdf-extraction                 │
+   │                                         │
+   │  ☑ pdf-extraction-pipeline-Proj        │
+   │    └─ main branch                       │
+   │                                         │
+   │  [Deploy Now] ◄─── Click                │
+   └─────────────────────────────────────────┘
+
+5. Railway Auto-Deploys!
+   
+   ┌─────────────────────────────────────────┐
+   │  Deploying pakistan-flood-ml-backend    │
+   │                                         │
+   │  ⚙️  Detecting project type...           │
+   │  ✅ Python detected                      │
+   │  📦 Installing dependencies...          │
+   │  ████████████░░░░░░░░░ 60%              │
+   │                                         │
+   │  View Logs ▼                            │
+   └─────────────────────────────────────────┘
+
+6. Generate Domain
+   
+   ┌─────────────────────────────────────────┐
+   │  Settings                               │
+   │                                         │
+   │  Domains                                │
+   │  ├─ No domains yet                      │
+   │  └─ [Generate Domain] ◄─── Click        │
+   │                                         │
+   │  After clicking:                        │
+   │  ✅ your-app.up.railway.app              │
+   │     [Copy URL] ◄─── Copy this!          │
+   └─────────────────────────────────────────┘
+
+7. Deployment Complete!
+   
+   ┌─────────────────────────────────────────┐
+   │  ✅ Deployment Successful                │
+   │                                         │
+   │  Your service is live at:               │
+   │  https://your-app.up.railway.app        │
+   │                                         │
+   │  Status: ● Running                      │
+   │  Memory: 245 MB / 1 GB                  │
+   │  CPU: 12%                               │
+   │                                         │
+   │  [View Logs] [Settings] [Metrics]       │
+   └─────────────────────────────────────────┘
+
+================================================================================
+
+STEP 2: DEPLOY FRONTEND TO VERCEL
+──────────────────────────────────
+
+1. Go to: https://vercel.com
+   
+   ┌─────────────────────────────────────────┐
+   │  ▲ Vercel                               │
+   │                                         │
+   │  Develop. Preview. Ship.                │
+   │                                         │
+   │  [Continue with GitHub] ◄─── Click      │
+   │                                         │
+   │  💳 No credit card required!            │
+   └─────────────────────────────────────────┘
+
+2. Import Project
+   
+   ┌─────────────────────────────────────────┐
+   │  Import Git Repository                  │
+   │                                         │
+   │  Search: pdf-extraction                 │
+   │                                         │
+   │  ☑ pdf-extraction-pipeline-Proj        │
+   │                                         │
+   │  [Import] ◄─── Click                    │
+   └─────────────────────────────────────────┘
+
+3. Configure Project
+   
+   ┌─────────────────────────────────────────┐
+   │  Configure Project                      │
+   │                                         │
+   │  Framework Preset: Vite ✅              │
+   │                                         │
+   │  Root Directory:                        │
+   │  [Edit] ◄─── Click                      │
+   │  └─ Select: frontend                    │
+   │                                         │
+   │  Build Command: npm run build           │
+   │  Output Directory: dist                 │
+   └─────────────────────────────────────────┘
+
+4. Add Environment Variable
+   
+   ┌─────────────────────────────────────────┐
+   │  Environment Variables                  │
+   │                                         │
+   │  Name:  VITE_API_URL                    │
+   │  Value: https://your-app.up.railway.app │
+   │         ↑ Paste Railway URL here        │
+   │                                         │
+   │  Environments:                          │
+   │  ☑ Production                           │
+   │  ☑ Preview                              │
+   │  ☑ Development                          │
+   │                                         │
+   │  [Add]                                  │
+   └─────────────────────────────────────────┘
+
+5. Deploy!
+   
+   ┌─────────────────────────────────────────┐
+   │  Ready to Deploy                        │
+   │                                         │
+   │  ✅ Framework: Vite                      │
+   │  ✅ Root: frontend                       │
+   │  ✅ Environment: VITE_API_URL set        │
+   │                                         │
+   │  [Deploy] ◄─── Click                    │
+   └─────────────────────────────────────────┘
+
+6. Building...
+   
+   ┌─────────────────────────────────────────┐
+   │  Building...                            │
+   │                                         │
+   │  ⚙️  Installing dependencies...          │
+   │  📦 Building production bundle...       │
+   │  ████████████████████ 100%              │
+   │                                         │
+   │  ✅ Build completed in 2m 15s            │
+   └─────────────────────────────────────────┘
+
+7. Deployment Success!
+   
+   ┌─────────────────────────────────────────┐
+   │  🎉 Congratulations!                     │
+   │                                         │
+   │  Your project is live at:               │
+   │  https://your-project.vercel.app        │
+   │                                         │
+   │  [Visit] [Copy URL] ◄─── Copy this!     │
+   │                                         │
+   │  Preview deployments enabled ✅          │
+   │  Auto-deploy from main branch ✅         │
+   └─────────────────────────────────────────┘
+
+================================================================================
+
+STEP 3: CONNECT FRONTEND & BACKEND
+───────────────────────────────────
+
+1. Go to Railway Dashboard
+   
+   ┌─────────────────────────────────────────┐
+   │  pakistan-flood-ml-backend              │
+   │                                         │
+   │  [Variables] ◄─── Click this tab        │
+   └─────────────────────────────────────────┘
+
+2. Add Environment Variable
+   
+   ┌─────────────────────────────────────────┐
+   │  Variables                              │
+   │                                         │
+   │  [+ New Variable] ◄─── Click            │
+   │                                         │
+   │  Variable Name:  FRONTEND_URL           │
+   │  Variable Value: https://your-project   │
+   │                  .vercel.app            │
+   │                  ↑ Paste Vercel URL     │
+   │                                         │
+   │  [Add]                                  │
+   └─────────────────────────────────────────┘
+
+3. Service Redeploys Automatically
+   
+   ┌─────────────────────────────────────────┐
+   │  Redeploying...                         │
+   │                                         │
+   │  ⚙️  Applying new environment variables  │
+   │  🔄 Restarting service...               │
+   │  ████████████████████ 100%              │
+   │                                         │
+   │  ✅ Redeploy successful (30 seconds)     │
+   └─────────────────────────────────────────┘
+
+================================================================================
+
+STEP 4: TEST YOUR DEPLOYMENT
+─────────────────────────────
+
+1. Test Backend
+   
+   Visit: https://your-app.up.railway.app/docs
+   
+   ┌─────────────────────────────────────────────────────────┐
+   │  FastAPI - Swagger UI                                   │
+   │                                                         │
+   │  Pakistan Flood ML Dashboard                           │
+   │                                                         │
+   │  Endpoints:                                            │
+   │  GET  /                                                │
+   │  GET  /health                                          │
+   │  GET  /api/dataset/info                                │
+   │  POST /api/upload                                      │
+   │  POST /api/analyze/timeseries                          │
+   │  POST /api/analyze/xgboost                             │
+   │  POST /api/analyze/nlp                                 │
+   │  POST /api/analyze/cnn                                 │
+   │  POST /api/analyze/clustering                          │
+   │  POST /api/analyze/auto                                │
+   │                                                         │
+   │  ✅ All endpoints visible!                              │
+   └─────────────────────────────────────────────────────────┘
+
+2. Test Frontend
+   
+   Visit: https://your-project.vercel.app
+   
+   ┌─────────────────────────────────────────────────────────┐
+   │  Pakistan Flood ML Analytics Dashboard                 │
+   │                                                         │
+   │  ┌─────────────────────────────────────────────────┐   │
+   │  │  Select Algorithm: [Auto ▼]                     │   │
+   │  │                                                  │   │
+   │  │  [Run Analysis] ◄─── Click this!                │   │
+   │  └─────────────────────────────────────────────────┘   │
+   │                                                         │
+   │  Summary Cards:                                        │
+   │  ┌──────────┐ ┌──────────┐ ┌──────────┐              │
+   │  │ 9,055    │ │ 6        │ │ 2,267    │              │
+   │  │ Records  │ │ Provinces│ │ Districts│              │
+   │  └──────────┘ └──────────┘ └──────────┘              │
+   └─────────────────────────────────────────────────────────┘
+
+3. Analysis Running
+   
+   ┌─────────────────────────────────────────────────────────┐
+   │  Running Analysis... ⏳                                  │
+   │                                                         │
+   │  ⚡ Fast response (no cold start!)                      │
+   │  📊 Processing data...                                  │
+   └─────────────────────────────────────────────────────────┘
+   
+   ↓ (2-3 seconds)
+   
+   ┌─────────────────────────────────────────────────────────┐
+   │  ✅ Analysis Complete!                                   │
+   │                                                         │
+   │  📈 Charts displaying:                                  │
+   │  • ARIMA Time Series Forecast                          │
+   │  • XGBoost Classification Results                      │
+   │  • NLP Sentiment Analysis                              │
+   │  • CNN Damage Prediction                               │
+   │  • K-Means Risk Clustering                             │
+   │                                                         │
+   │  🎉 Everything works!                                   │
+   └─────────────────────────────────────────────────────────┘
+
+================================================================================
+
+                         CONFIGURATION FILES
+
+Your project now has these Railway config files:
+
+1. nixpacks.toml
+┌─────────────────────────────────────────┐
+│  [phases.setup]                         │
+│  nixPkgs = ["python311", "pip"]         │
+│                                         │
+│  [phases.install]                       │
+│  cmds = [                               │
+│    "cd backend",                        │
+│    "pip install -r requirements.txt",   │
+│    "pip install torch ..."              │
+│  ]                                      │
+│                                         │
+│  [start]                                │
+│  cmd = "cd backend && uvicorn ..."      │
+└─────────────────────────────────────────┘
+
+2. Procfile
+┌─────────────────────────────────────────┐
+│  web: cd backend && uvicorn main:app    │
+│       --host 0.0.0.0 --port $PORT       │
+└─────────────────────────────────────────┘
+
+3. railway.toml
+┌─────────────────────────────────────────┐
+│  [build]                                │
+│  builder = "NIXPACKS"                   │
+│  buildCommand = "cd backend && ..."     │
+│                                         │
+│  [deploy]                               │
+│  startCommand = "cd backend && ..."     │
+│  healthcheckPath = "/health"            │
+└─────────────────────────────────────────┘
+
+================================================================================
+
+                         AUTO-DEPLOYMENT FLOW
+
+Local Machine          GitHub            Railway/Vercel
+─────────────          ──────            ──────────────
+
+1. Make changes
+   ↓
+2. git add .
+   ↓
+3. git commit -m "update"
+   ↓
+4. git push ────────► 5. Receive push
+                         ↓
+                      6. Trigger Actions
+                         ↓
+                      7. Run tests
+                         ├─► Backend tests
+                         └─► Frontend build
+                         ↓
+                      8. Tests pass ✅
+                         ↓
+                         ├──────────────► 9. Vercel deploys
+                         │                   ↓
+                         │                10. Build (2 min)
+                         │                   ↓
+                         │                11. Live! 🎉
+                         │
+                         └──────────────► 9. Railway deploys
+                                             ↓
+                                          10. Build (3 min)
+                                             ↓
+                                          11. Live! 🎉
+
+Total Time: 3-5 minutes from push to live! 🚀
+
+================================================================================
+
+                         COST BREAKDOWN
+
+Railway Free Tier:
+┌─────────────────────────────────────────────────────────┐
+│  💰 $5 free credits per month                           │
+│  ⏰ ~500 hours of usage                                 │
+│  💾 1 GB RAM                                            │
+│  💿 1 GB disk space                                     │
+│  ⚡ No cold starts                                      │
+│  🌐 Automatic HTTPS                                     │
+│                                                         │
+│  Estimated usage for this project: $3-4/month          │
+│  Within free tier: ✅ YES                               │
+│  Cost to you: $0/month                                 │
+└─────────────────────────────────────────────────────────┘
+
+Vercel Free Tier:
+┌─────────────────────────────────────────────────────────┐
+│  📊 100 GB bandwidth/month                              │
+│  🚀 Unlimited deployments                               │
+│  🌐 Global CDN                                          │
+│  🔒 Automatic HTTPS                                     │
+│  👁️  Preview deployments                                │
+│                                                         │
+│  Cost to you: $0/month                                 │
+└─────────────────────────────────────────────────────────┘
+
+Total Monthly Cost: $0 🎉
+
+================================================================================
+
+                         MONITORING DASHBOARDS
+
+Railway Dashboard:
+┌─────────────────────────────────────────┐
+│  pakistan-flood-ml-backend              │
+│                                         │
+│  Status: ● Running                      │
+│  Memory: 245 MB / 1 GB                  │
+│  CPU: 12%                               │
+│  Network: 1.2 MB/s                      │
+│                                         │
+│  Credits Used: $2.34 / $5.00            │
+│  Hours Used: 234 / 500                  │
+│                                         │
+│  [Logs] [Metrics] [Settings]            │
+└─────────────────────────────────────────┘
+
+Vercel Dashboard:
+┌─────────────────────────────────────────┐
+│  your-project                           │
+│                                         │
+│  Status: ● Ready                        │
+│  Deployments: 12                        │
+│  Bandwidth: 2.3 GB / 100 GB             │
+│                                         │
+│  Latest Deployment:                     │
+│  ✅ Production (2 minutes ago)           │
+│                                         │
+│  [Analytics] [Logs] [Settings]          │
+└─────────────────────────────────────────┘
+
+================================================================================
+
+                         SUCCESS INDICATORS
+
+✅ Backend Deployed:
+   • https://your-app.up.railway.app/docs loads
+   • /api/dataset/info returns JSON with 5 datasets
+   • /health returns {"status": "healthy"}
+   • No cold starts - instant response!
+
+✅ Frontend Deployed:
+   • https://your-project.vercel.app loads
+   • Dashboard displays correctly
+   • No console errors (F12)
+   • Summary cards show data
+
+✅ Connected:
+   • "Run Analysis" button works
+   • Results display in 2-3 seconds
+   • All 5 algorithms work
+   • Charts render correctly
+   • No CORS errors
+
+✅ Auto-Deployment:
+   • Push to main triggers deployment
+   • GitHub Actions shows green ✅
+   • Changes appear on live site in 3-5 min
+
+================================================================================
+
+                         TROUBLESHOOTING
+
+Problem: Railway deployment failed
+┌─────────────────────────────────────────┐
+│  ❌ Build failed                         │
+│  Error: Could not install dependencies  │
+└─────────────────────────────────────────┘
+
+Solution:
+1. Check build logs in Railway dashboard
+2. Verify nixpacks.toml is in root directory
+3. Click "Redeploy" to try again
+4. PyTorch may take time - be patient
+
+────────────────────────────────────────────
+
+Problem: Frontend can't connect
+┌─────────────────────────────────────────┐
+│  ❌ Network Error                        │
+│  ❌ CORS policy error                    │
+└─────────────────────────────────────────┘
+
+Solution:
+1. Check VITE_API_URL in Vercel (no trailing /)
+2. Check FRONTEND_URL in Railway (no trailing /)
+3. Redeploy both services
+4. Clear browser cache
+
+────────────────────────────────────────────
+
+Problem: Out of credits
+┌─────────────────────────────────────────┐
+│  ⚠️  Service paused                      │
+│  You've used $5.00 / $5.00 credits      │
+└─────────────────────────────────────────┘
+
+Solution:
+✅ Credits reset next month automatically
+💡 Optimize your app to use less resources
+💰 Or upgrade to paid plan ($5/month)
+
+================================================================================
+
+                         NEXT STEPS
+
+After successful deployment:
+
+1. ✅ Test all 5 ML algorithms
+2. 📝 Update README with live URLs
+3. 🔗 Share your dashboard
+4. 📊 Monitor usage in dashboards
+5. 🎨 Add custom domain (optional)
+6. 🚀 Iterate and improve
+
+Your Pakistan Flood ML Analytics Dashboard is LIVE! 🎉
+
+Frontend: https://your-project.vercel.app
+Backend:  https://your-app.up.railway.app
+
+No credit card required! 💳❌
+Total cost: $0/month 💰
+
+================================================================================

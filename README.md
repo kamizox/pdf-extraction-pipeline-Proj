@@ -53,6 +53,8 @@ flood-ml-project/
 
 ## Quick start
 
+### Local Development
+
 ### 1. Clone the repository
 
 ```bash
@@ -89,6 +91,22 @@ App: http://localhost:5173
 2. Click **Go to Dashboard**.  
 3. Select an algorithm → **Run Analysis**.  
 4. Switch tabs: ARIMA, XGBoost, NLP, CNN, KMeans, Plotly overview.
+
+---
+
+## 🚀 Deployment
+
+### Quick Deploy (5 minutes) - No Credit Card Required!
+See [RAILWAY_QUICK_START.md](RAILWAY_QUICK_START.md) for a 5-minute deployment guide.
+
+### Full Deployment Guide
+See [RAILWAY_DEPLOYMENT.md](RAILWAY_DEPLOYMENT.md) for detailed instructions on deploying to:
+- **Frontend:** Vercel (free tier, no credit card)
+- **Backend:** Railway.app (free tier, no credit card)
+
+**Why Railway?** No credit card required, $5 free credits/month, no cold starts!
+
+**Live Demo:** [Your deployed URL here after deployment]
 
 ---
 
@@ -134,6 +152,54 @@ Each analyze endpoint loads **only** its dedicated dataset from `backend/dataset
 - **K-Means:** Silhouette ≈ 0.885 with k=3 on raw scaled features; most districts cluster as low risk, reflecting real flood exposure (extreme years like 2010/2022 are rare high-risk outliers).  
 - **CNN:** Rows are reshaped to 4×3 single-channel heatmaps from 12 normalized features.  
 - **CORS:** Frontend origins `http://localhost:5173` and `http://localhost:3000` are allowed.
+
+---
+
+## Troubleshooting
+
+### "Not Found" Error on /api/dataset/info
+
+**Problem:** Multiple backend instances running on port 8000 simultaneously.
+
+**Quick Fix (Windows):**
+```cmd
+fix_backend.bat
+```
+
+**Manual Fix:**
+```cmd
+# 1. Kill all processes on port 8000
+netstat -ano | findstr :8000
+taskkill /F /PID [PID_NUMBER]
+
+# 2. Start backend cleanly
+cd backend
+venv\Scripts\activate
+uvicorn main:app --reload --host 0.0.0.0 --port 8000
+
+# 3. Verify routes work
+curl http://localhost:8000/api/dataset/info
+```
+
+**Verify only ONE process is running:**
+```cmd
+netstat -ano | findstr :8000
+```
+
+See [TROUBLESHOOTING.md](TROUBLESHOOTING.md) for detailed solutions.
+
+### Easy Startup
+
+Use the automated startup script:
+```cmd
+start_project.bat
+```
+
+This will:
+1. Clean up any existing backend processes
+2. Start backend on port 8000
+3. Start frontend on port 5173
+4. Open the application in your browser
 
 ---
 

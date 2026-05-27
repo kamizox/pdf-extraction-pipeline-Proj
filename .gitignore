@@ -21,7 +21,19 @@ Thumbs.db
 
 # Env secrets
 .env
-.env.*
+.env.local
+.env.*.local
+
+# Keep example and production env files
+!.env.example
+!.env.development
+!.env.production
 
 # Temp uploads
 backend/datasets/_temp_upload*
+
+# Vercel
+.vercel
+
+# Render
+.render
