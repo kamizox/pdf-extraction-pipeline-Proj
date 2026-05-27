@@ -4,6 +4,8 @@ Your backend is live! Let's deploy the frontend in 5 minutes.
 
 **Backend URL:** https://pdf-extraction-pipeline-proj-production.up.railway.app ✅
 
+**✅ FIXED:** Removed conflicting `vercel.json` file for clean deployment!
+
 ---
 
 ## ⚡ Quick Steps
@@ -12,7 +14,7 @@ Your backend is live! Let's deploy the frontend in 5 minutes.
 
 ```bash
 git add .
-git commit -m "Update frontend for production deployment"
+git commit -m "Fix Vercel deployment - remove conflicting vercel.json"
 git push origin main
 ```
 
@@ -97,9 +99,15 @@ git push origin main
 
 ## 🐛 Quick Troubleshooting
 
+**Build fails with "cd frontend" error?**
+- ✅ FIXED! We removed the conflicting `vercel.json` file
+- Make sure you pushed the latest changes
+- Redeploy on Vercel
+
 **Build fails?**
 - Check root directory is set to `frontend`
 - Verify `frontend/package.json` exists
+- See `VERCEL_FIX.md` for detailed troubleshooting
 
 **Can't connect to backend?**
 - Check `VITE_API_URL` is set correctly (no trailing slash)
@@ -107,6 +115,7 @@ git push origin main
 - Clear browser cache and try again
 
 **Need more help?**
+- See: `VERCEL_FIX.md` for deployment fixes
 - See: `VERCEL_DEPLOYMENT.md` for detailed guide
 
 ---
