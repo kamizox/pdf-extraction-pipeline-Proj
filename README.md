@@ -96,17 +96,24 @@ App: http://localhost:5173
 
 ## 🚀 Deployment
 
-### Quick Deploy (5 minutes) - No Credit Card Required!
-See [RAILWAY_QUICK_START.md](RAILWAY_QUICK_START.md) for a 5-minute deployment guide.
+### Live Demo
+**Backend API:** https://pdf-extraction-pipeline-proj-production.up.railway.app ✅  
+**API Docs:** https://pdf-extraction-pipeline-proj-production.up.railway.app/docs ✅  
+**Frontend:** [Deploy now - see below](#deploy-frontend)
 
-### Full Deployment Guide
-See [RAILWAY_DEPLOYMENT.md](RAILWAY_DEPLOYMENT.md) for detailed instructions on deploying to:
+### Deploy Frontend (5 minutes) - No Credit Card Required!
+See [DEPLOY_FRONTEND_NOW.md](DEPLOY_FRONTEND_NOW.md) for quick deployment to Vercel.
+
+### Full Deployment Guides
+- **Quick Start:** [RAILWAY_QUICK_START.md](RAILWAY_QUICK_START.md) - 5-minute guide
+- **Detailed Guide:** [RAILWAY_DEPLOYMENT.md](RAILWAY_DEPLOYMENT.md) - Complete instructions
+- **Frontend Guide:** [VERCEL_DEPLOYMENT.md](VERCEL_DEPLOYMENT.md) - Vercel deployment
+
+**Platforms:**
 - **Frontend:** Vercel (free tier, no credit card)
-- **Backend:** Railway.app (free tier, no credit card)
+- **Backend:** Railway.app (free tier, no credit card) ✅ DEPLOYED
 
 **Why Railway?** No credit card required, $5 free credits/month, no cold starts!
-
-**Live Demo:** [Your deployed URL here after deployment]
 
 ---
 
